@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Login</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Segoe UI',sans-serif;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#0f172a,#1e293b,#2563eb);
+      overflow:hidden;
+    }
+
+    .container{
+      width:850px;
+      height:500px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(15px);
+      border-radius:25px;
+      overflow:hidden;
+      display:flex;
+      box-shadow:0 8px 40px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .left{
+      width:50%;
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:40px;
+      text-align:center;
+    }
+
+    .left h1{
+      font-size:42px;
+      margin-bottom:15px;
+    }
+
+    .left p{
+      line-height:1.7;
+      color:#dbeafe;
+    }
+
+    .right{
+      width:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .form-box{
+      width:320px;
+    }
+
+    .form-box h2{
+      color:white;
+      text-align:center;
+      margin-bottom:25px;
+      font-size:32px;
+    }
+
+    .input-box{
+      margin-bottom:18px;
+    }
+
+    .input-box input{
+      width:100%;
+      padding:14px;
+      border:none;
+      outline:none;
+      border-radius:12px;
+      background:rgba(255,255,255,0.1);
+      color:white;
+      font-size:15px;
+    }
+
+    .input-box input::placeholder{
+      color:#ddd;
+    }
+
+    .btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(135deg,#3b82f6,#2563eb);
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      transform:scale(1.03);
+    }
+
+    .toggle{
+      margin-top:15px;
+      text-align:center;
+      color:#ccc;
+    }
+
+    .toggle span{
+      color:#60a5fa;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .message{
+      text-align:center;
+      margin-top:15px;
+      color:#90ee90;
+    }
+
+    /* SUCCESS SCREEN */
+
+    .success-page{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:linear-gradient(135deg,#111827,#1e3a8a);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      color:white;
+      animation:fadeIn 1s ease;
+    }
+
+    .tick{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:50px;
+      margin-bottom:25px;
+      box-shadow:0 0 25px rgba(34,197,94,0.5);
+    }
+
+    .success-page h1{
+      font-size:40px;
+      margin-bottom:15px;
+    }
+
+    .success-page p{
+      color:#d1d5db;
+      font-size:18px;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:scale(0.9);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="left">
+      <h1>Welcome</h1>
+      <p>
+        Modern Login & Signup Form<br>
+        with stylish glassmorphism UI.
+      </p>
+    </div>
+
+    <div class="right">
+
+      <!-- LOGIN -->
+
+      <div class="form-box" id="loginForm">
+
+        <h2>Login</h2>
+
+        <div class="input-box">
+          <input type="text" id="loginUsername" placeholder="Username">
+        </div>
+
+        <div class="input-box">
+          <input type="password" id="loginPassword" placeholder="Password">
+        </div>
+
+        <button class="btn" onclick="login()">
+          Login
+        </button>
+
+        <div class="toggle">
+          Don't have account?
+          <span onclick="showSignup()">Sign Up</span>
+        </div>
+
+        <div class="message" id="loginMessage"></div>
+
+      </div>
+
+      <!-- SIGNUP -->
+
+      <div class="form-box hidden" id="signupForm">
+
+        <h2>Sign Up</h2>
+
+        <div class="input-box">
+          <input type="text" id="signupUsername" placeholder="Username">
+        </div>
+
+        <div class="input-box">
+          <input type="password" id="signupPassword" placeholder="Password">
+        </div>
+
+        <button class="btn" onclick="signup()">
+          Create Account
+        </button>
+
+        <div class="toggle">
+          Already have account?
+          <span onclick="showLogin()">Login</span>
+        </div>
+
+        <div class="message" id="signupMessage"></div>
+
+      </div>
+
+      <!-- SUCCESS PAGE -->
+
+      <div class="success-page" id="successPage">
+
+        <div class="tick">
+          ✓
+        </div>
+
+        <h1>Thanks for Signing In</h1>
+
+        <p>
+          Login Successful ✅
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+
+  function showSignup(){
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("signupForm").classList.remove("hidden");
+  }
+
+  function showLogin(){
+    document.getElementById("signupForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+  }
+
+  // SIGNUP
+
+  function signup(){
+
+    const username =
+    document.getElementById("signupUsername").value;
+
+    const password =
+    document.getElementById("signupPassword").value;
+
+    if(username==="" || password===""){
+      alert("Fill all fields");
+      return;
+    }
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || [];
+
+    users.push({
+      username:username,
+      password:password
+    });
+
+    localStorage.setItem("users",JSON.stringify(users));
+
+    document.getElementById("signupMessage").innerText =
+    "Account Created Successfully";
+
+  }
+
+  // LOGIN
+
+  function login(){
+
+    const username =
+    document.getElementById("loginUsername").value;
+
+    const password =
+    document.getElementById("loginPassword").value;
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || [];
+
+    const validUser = users.find(
+      user =>
+      user.username === username &&
+      user.password === password
+    );
+
+    if(validUser){
+
+      // Hide forms
+      document.getElementById("loginForm").style.display="none";
+      document.getElementById("signupForm").style.display="none";
+
+      // Show success page
+      document.getElementById("successPage").style.display="flex";
+
+    }
+    else{
+
+      document.getElementById("loginMessage").innerText =
+      "Invalid Username or Password";
+
+    }
+
+  }
+
+</script>
+
+</body>
+</html>
